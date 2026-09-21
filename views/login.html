@@ -2,82 +2,136 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kahut Bank - Masuk</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    </style>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen p-4">
-    <div class="w-full max-w-sm bg-white rounded-3xl shadow-lg p-6 flex flex-col justify-between min-h-[550px]">
-        <div>
-            <!-- Header Logo Kahut Bank -->
-            <div class="flex flex-col items-center mt-4 mb-8">
-                <div class="w-16 h-16 bg-blue-600 rounded-2xl flex items-center justify-center shadow-md mb-3">
-                    <i class="fa-solid fa-shield-halved text-white text-3xl"></i>
-                </div>
-                <h1 class="text-2xl font-bold text-gray-800 tracking-tight">Kahut Bank</h1>
-                <p class="text-xs text-gray-500 font-medium mt-1">Solusi Finansial Modern</p>
+    <div class="w-full max-w-sm bg-white rounded-3xl shadow-lg p-6">
+        
+        <!-- Header Logo Kahut Bank -->
+        <div class="flex flex-col items-center mb-6">
+            <div class="w-16 h-16 rounded-2xl flex items-center justify-center mb-2 overflow-hidden shadow-sm">
+                <!-- Memakai Asset Logo Kahut Bank -->
+                <svg viewBox="0 0 100 100" class="w-full h-full">
+                    <path d="M 20,20 Q 50,15 80,20 L 75,55 Q 50,85 20,55 Z" fill="#1d4ed8"/>
+                    <path d="M 35,65 Q 55,80 75,30 Q 60,35 45,45 Q 35,55 35,65 Z" fill="#f97316"/>
+                    <polygon points="75,30 85,25 80,40" fill="#f97316"/>
+                </svg>
             </div>
-
-            <!-- Tab Switcher (User / Admin) -->
-            <div class="bg-gray-100 p-1 rounded-xl flex mb-6">
-                <button id="tabUser" onclick="switchRole('user')" class="flex-1 py-2 text-xs font-semibold rounded-lg bg-white text-blue-600 shadow-sm transition-all">Member</button>
-                <button id="tabAdmin" onclick="switchRole('admin')" class="flex-1 py-2 text-xs font-semibold rounded-lg text-gray-500 transition-all">Admin</button>
-            </div>
-
-            <!-- Form Login -->
-            <form id="loginForm" onsubmit="handleLogin(event)" class="space-y-4">
-                <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1" id="idLabel">Nomor HP / Email</label>
-                    <input type="text" id="usernameInput" required placeholder="08123456789" class="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all">
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-gray-600 mb-1">PIN / Password</label>
-                    <input type="password" required placeholder="••••••" maxlength="6" class="w-full px-4 py-3 text-sm bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:border-blue-500 focus:bg-white transition-all">
-                </div>
-                <button type="submit" class="w-full py-3.5 bg-blue-600 text-white font-bold rounded-xl shadow-blue-200 shadow-lg hover:bg-blue-700 active:scale-[0.98] transition-all text-sm mt-2">
-                    Lanjut
-                </button>
-            </form>
+            <h1 class="text-2xl font-bold text-gray-800">Kahut Bank</h1>
+            <p class="text-xs text-gray-400">Dompet Digital Terpercaya</p>
         </div>
 
-        <div class="text-center text-xs text-gray-400 mt-6">
-            &copy; 2026 Kahut Bank Indonesia.
+        <!-- Role Switcher -->
+        <div class="bg-gray-100 p-1 rounded-xl flex mb-4">
+            <button id="btnMember" onclick="setRole('user')" class="flex-1 py-1.5 text-xs font-bold rounded-lg bg-white text-blue-600 shadow-sm">Member</button>
+            <button id="btnAdmin" onclick="setRole('admin')" class="flex-1 py-1.5 text-xs font-bold rounded-lg text-gray-400">Admin</button>
+        </div>
+
+        <!-- Form Login -->
+        <form id="authForm" onsubmit="handleAuth(event)" class="space-y-3">
+            <div id="nameBox" class="hidden">
+                <label class="block text-[11px] font-semibold text-gray-500 mb-1">Nama Lengkap</label>
+                <input type="text" id="regName" placeholder="Nama Anda" class="w-full px-3.5 py-2.5 text-xs bg-gray-50 border rounded-xl focus:outline-none">
+            </div>
+
+            <div>
+                <label id="idLabel" class="block text-[11px] font-semibold text-gray-500 mb-1">Nomor HP</label>
+                <input type="text" id="authId" required placeholder="08123456789" class="w-full px-3.5 py-2.5 text-xs bg-gray-50 border rounded-xl focus:outline-none">
+            </div>
+
+            <div>
+                <label id="pinLabel" class="block text-[11px] font-semibold text-gray-500 mb-1">PIN (6 Angka)</label>
+                <input type="password" id="authPin" required placeholder="••••••" class="w-full px-3.5 py-2.5 text-xs bg-gray-50 border rounded-xl focus:outline-none">
+            </div>
+
+            <button type="submit" id="submitBtn" class="w-full py-3 bg-blue-600 text-white font-bold rounded-xl text-xs shadow-md hover:bg-blue-700 transition-all mt-2">
+                Masuk
+            </button>
+        </form>
+
+        <div class="mt-4 text-center">
+            <button id="toggleRegister" onclick="toggleRegisterMode()" class="text-xs font-semibold text-blue-600 hover:underline">
+                Belum punya akun? Daftar Sekarang
+            </button>
         </div>
     </div>
 
     <script>
         let currentRole = 'user';
+        let isRegister = false;
 
-        function switchRole(role) {
+        function setRole(role) {
             currentRole = role;
-            const tabUser = document.getElementById('tabUser');
-            const tabAdmin = document.getElementById('tabAdmin');
-            const idLabel = document.getElementById('idLabel');
-            const usernameInput = document.getElementById('usernameInput');
+            isRegister = false;
+            document.getElementById('nameBox').classList.add('hidden');
+            document.getElementById('toggleRegister').classList.remove('hidden');
 
             if (role === 'admin') {
-                tabAdmin.className = "flex-1 py-2 text-xs font-semibold rounded-lg bg-white text-blue-600 shadow-sm transition-all";
-                tabUser.className = "flex-1 py-2 text-xs font-semibold rounded-lg text-gray-500 transition-all";
-                idLabel.innerText = "Username Admin";
-                usernameInput.placeholder = "admin_kahut";
+                document.getElementById('btnAdmin').className = "flex-1 py-1.5 text-xs font-bold rounded-lg bg-white text-blue-600 shadow-sm";
+                document.getElementById('btnMember').className = "flex-1 py-1.5 text-xs font-bold rounded-lg text-gray-400";
+                document.getElementById('idLabel').innerText = "Username Admin";
+                document.getElementById('pinLabel').innerText = "Password Admin";
+                document.getElementById('authId').placeholder = "admin";
+                document.getElementById('submitBtn').innerText = "Masuk Panel Admin";
+                document.getElementById('toggleRegister').classList.add('hidden');
             } else {
-                tabUser.className = "flex-1 py-2 text-xs font-semibold rounded-lg bg-white text-blue-600 shadow-sm transition-all";
-                tabAdmin.className = "flex-1 py-2 text-xs font-semibold rounded-lg text-gray-500 transition-all";
-                idLabel.innerText = "Nomor HP / Email";
-                usernameInput.placeholder = "08123456789";
+                document.getElementById('btnMember').className = "flex-1 py-1.5 text-xs font-bold rounded-lg bg-white text-blue-600 shadow-sm";
+                document.getElementById('btnAdmin').className = "flex-1 py-1.5 text-xs font-bold rounded-lg text-gray-400";
+                document.getElementById('idLabel').innerText = "Nomor HP";
+                document.getElementById('pinLabel').innerText = "PIN (6 Angka)";
+                document.getElementById('authId').placeholder = "08123456789";
+                document.getElementById('submitBtn').innerText = "Masuk";
             }
         }
 
-        function handleLogin(e) {
-            e.preventDefault();
-            if (currentRole === 'admin') {
-                window.location.href = '/admin';
+        function toggleRegisterMode() {
+            isRegister = !isRegister;
+            if (isRegister) {
+                document.getElementById('nameBox').classList.remove('hidden');
+                document.getElementById('submitBtn').innerText = "Daftar Akun Baru";
+                document.getElementById('toggleRegister').innerText = "Sudah punya akun? Masuk";
             } else {
-                window.location.href = '/dashboard';
+                document.getElementById('nameBox').classList.add('hidden');
+                document.getElementById('submitBtn').innerText = "Masuk";
+                document.getElementById('toggleRegister').innerText = "Belum punya akun? Daftar Sekarang";
+            }
+        }
+
+        async function handleAuth(e) {
+            e.preventDefault();
+            const id = document.getElementById('authId').value;
+            const pin = document.getElementById('authPin').value;
+
+            if (isRegister) {
+                const name = document.getElementById('regName').value;
+                const res = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, phone: id, pin })
+                });
+                const data = await res.json();
+                alert(data.message);
+                if (data.success) toggleRegisterMode();
+            } else {
+                const res = await fetch('/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ role: currentRole, username: id, pin })
+                });
+                const data = await res.json();
+                if (data.success) {
+                    if (data.role === 'admin') {
+                        window.location.href = '/admin';
+                    } else {
+                        localStorage.setItem('kahutUser', JSON.stringify(data.user));
+                        window.location.href = '/dashboard';
+                    }
+                } else {
+                    alert(data.message);
+                }
             }
         }
     </script>

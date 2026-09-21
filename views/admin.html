@@ -7,72 +7,111 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-50 min-h-screen">
-
-    <!-- Topbar Admin -->
-    <header class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center sticky top-0 z-10">
+<body class="bg-gray-100 min-h-screen">
+    <header class="bg-white border-b px-6 py-4 flex justify-between items-center sticky top-0 z-10">
         <div class="flex items-center space-x-3">
-            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-sm font-bold">
-                <i class="fa-solid fa-shield-halved"></i>
+            <div class="w-8 h-8 rounded-lg overflow-hidden">
+                <svg viewBox="0 0 100 100" class="w-full h-full">
+                    <path d="M 20,20 Q 50,15 80,20 L 75,55 Q 50,85 20,55 Z" fill="#1d4ed8"/>
+                    <path d="M 35,65 Q 55,80 75,30 Q 60,35 45,45 Q 35,55 35,65 Z" fill="#f97316"/>
+                </svg>
             </div>
-            <span class="font-bold text-gray-800 text-base">Kahut Admin Panel</span>
+            <span class="font-bold text-gray-800 text-sm">Kahut Admin Dashboard</span>
         </div>
-        <a href="/" class="text-xs text-red-600 font-semibold hover:underline">
-            <i class="fa-solid fa-power-off mr-1"></i> Keluar
-        </a>
+        <a href="/" class="text-xs text-red-600 font-bold">Keluar</a>
     </header>
 
-    <div class="max-w-6xl mx-auto p-6">
-        <h1 class="text-xl font-bold text-gray-800 mb-6">Ringkasan Sistem</h1>
-
-        <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-                <p class="text-xs text-gray-400 font-medium">Total Pengguna</p>
-                <h3 class="text-2xl font-bold text-gray-800 mt-1">1,284 Member</h3>
-            </div>
-            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-                <p class="text-xs text-gray-400 font-medium">Total Transaksi Hari Ini</p>
-                <h3 class="text-2xl font-bold text-blue-600 mt-1">Rp 148.500.000</h3>
-            </div>
-            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
-                <p class="text-xs text-gray-400 font-medium">Status Server</p>
-                <h3 class="text-2xl font-bold text-green-500 mt-1">Normal (99.9%)</h3>
-            </div>
-        </div>
-
-        <!-- Tabel Log Transaksi -->
-        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-            <div class="px-6 py-4 border-b border-gray-100">
-                <h2 class="font-bold text-gray-800 text-sm">Aktivitas Transaksi Terbaru</h2>
-            </div>
+    <div class="max-w-5xl mx-auto p-6 space-y-6">
+        
+        <!-- Daftar Member & Kontrol Saldo -->
+        <div class="bg-white p-5 rounded-2xl border shadow-sm">
+            <h2 class="font-bold text-gray-800 text-sm mb-4">Kelola Member & Saldo</h2>
             <div class="overflow-x-auto">
                 <table class="w-full text-left text-xs">
-                    <thead class="bg-gray-50 text-gray-400 uppercase tracking-wider">
+                    <thead class="bg-gray-50 text-gray-400 uppercase">
                         <tr>
-                            <th class="px-6 py-3">Pengirim</th>
-                            <th class="px-6 py-3">Bank Tujuan</th>
-                            <th class="px-6 py-3">Nominal</th>
-                            <th class="px-6 py-3">Status</th>
+                            <th class="p-3">Nama Member</th>
+                            <th class="p-3">Nomor HP</th>
+                            <th class="p-3">Saldo Saat Ini</th>
+                            <th class="p-3 text-center">Aksi Saldo</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        <tr>
-                            <td class="px-6 py-4 font-medium text-gray-800">Wani User</td>
-                            <td class="px-6 py-4">BCA - 883012389</td>
-                            <td class="px-6 py-4 font-bold">Rp 250.000</td>
-                            <td class="px-6 py-4"><span class="bg-green-100 text-green-700 px-2.5 py-1 rounded-full font-semibold text-[10px]">Sukses</span></td>
-                        </tr>
-                        <tr>
-                            <td class="px-6 py-4 font-medium text-gray-800">Budi Santoso</td>
-                            <td class="px-6 py-4">Mandiri - 137001234</td>
-                            <td class="px-6 py-4 font-bold">Rp 1.000.000</td>
-                            <td class="px-6 py-4"><span class="bg-green-100 text-green-700 px-2.5 py-1 rounded-full font-semibold text-[10px]">Sukses</span></td>
-                        </tr>
+                    <tbody id="userTable" class="divide-y">
+                        <!-- Data member dimuat otomatis -->
                     </tbody>
                 </table>
             </div>
         </div>
+
+        <!-- Tabel Riwayat Semua Transaksi -->
+        <div class="bg-white p-5 rounded-2xl border shadow-sm">
+            <h2 class="font-bold text-gray-800 text-sm mb-4">Semua Log Transaksi System</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-gray-50 text-gray-400 uppercase">
+                        <tr>
+                            <th class="p-3">ID Transaksi</th>
+                            <th class="p-3">Pengirim</th>
+                            <th class="p-3">Penerima</th>
+                            <th class="p-3">Nominal</th>
+                            <th class="p-3">Tipe</th>
+                        </tr>
+                    </thead>
+                    <tbody id="txTable" class="divide-y">
+                        <!-- Data transaksi dimuat otomatis -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
     </div>
+
+    <script>
+        async function loadAdminData() {
+            const res = await fetch('/api/admin/data');
+            const data = await res.json();
+
+            // Render Tabel Member
+            document.getElementById('userTable').innerHTML = data.users.map(u => `
+                <tr>
+                    <td class="p-3 font-bold text-gray-800">${u.name}</td>
+                    <td class="p-3 text-gray-500">${u.id}</td>
+                    <td class="p-3 font-bold text-blue-600">Rp ${u.balance.toLocaleString('id-ID')}</td>
+                    <td class="p-3 text-center space-x-1">
+                        <button onclick="adjustBalance('${u.id}', 'ADD')" class="bg-green-100 text-green-700 px-2.5 py-1 rounded-lg font-bold hover:bg-green-200">+ Saldo</button>
+                        <button onclick="adjustBalance('${u.id}', 'SUBTRACT')" class="bg-red-100 text-red-700 px-2.5 py-1 rounded-lg font-bold hover:bg-red-200">- Saldo</button>
+                    </td>
+                </tr>
+            `).join('');
+
+            // Render Tabel Transaksi
+            document.getElementById('txTable').innerHTML = data.transactions.map(t => `
+                <tr>
+                    <td class="p-3 font-mono text-gray-400">${t.id}</td>
+                    <td class="p-3 font-bold">${t.sender}</td>
+                    <td class="p-3 text-gray-600">${t.recipient}</td>
+                    <td class="p-3 font-bold text-gray-800">Rp ${t.amount.toLocaleString('id-ID')}</td>
+                    <td class="p-3"><span class="bg-gray-100 px-2 py-0.5 rounded text-[10px] font-semibold">${t.type}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        async function adjustBalance(userId, type) {
+            const amount = prompt(`Masukkan nominal saldo yang ingin ${type === 'ADD' ? 'DITAMBAHKAN' : 'DIKURANGI'}:`);
+            if(!amount || isNaN(amount)) return;
+
+            const res = await fetch('/api/admin/adjust-balance', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId, type, amount })
+            });
+
+            const data = await res.json();
+            alert(data.message);
+            loadAdminData();
+        }
+
+        loadAdminData();
+    </script>
 </body>
 </html>
