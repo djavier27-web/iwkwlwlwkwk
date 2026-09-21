@@ -1,1 +1,78 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kahut Bank - Panel Admin</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gray-50 min-h-screen">
 
+    <!-- Topbar Admin -->
+    <header class="bg-white border-b border-gray-200 px-6 py-4 flex justify-between items-center sticky top-0 z-10">
+        <div class="flex items-center space-x-3">
+            <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center text-white text-sm font-bold">
+                <i class="fa-solid fa-shield-halved"></i>
+            </div>
+            <span class="font-bold text-gray-800 text-base">Kahut Admin Panel</span>
+        </div>
+        <a href="/" class="text-xs text-red-600 font-semibold hover:underline">
+            <i class="fa-solid fa-power-off mr-1"></i> Keluar
+        </a>
+    </header>
+
+    <div class="max-w-6xl mx-auto p-6">
+        <h1 class="text-xl font-bold text-gray-800 mb-6">Ringkasan Sistem</h1>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                <p class="text-xs text-gray-400 font-medium">Total Pengguna</p>
+                <h3 class="text-2xl font-bold text-gray-800 mt-1">1,284 Member</h3>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                <p class="text-xs text-gray-400 font-medium">Total Transaksi Hari Ini</p>
+                <h3 class="text-2xl font-bold text-blue-600 mt-1">Rp 148.500.000</h3>
+            </div>
+            <div class="bg-white p-5 rounded-2xl border border-gray-100 shadow-sm">
+                <p class="text-xs text-gray-400 font-medium">Status Server</p>
+                <h3 class="text-2xl font-bold text-green-500 mt-1">Normal (99.9%)</h3>
+            </div>
+        </div>
+
+        <!-- Tabel Log Transaksi -->
+        <div class="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-100">
+                <h2 class="font-bold text-gray-800 text-sm">Aktivitas Transaksi Terbaru</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-gray-50 text-gray-400 uppercase tracking-wider">
+                        <tr>
+                            <th class="px-6 py-3">Pengirim</th>
+                            <th class="px-6 py-3">Bank Tujuan</th>
+                            <th class="px-6 py-3">Nominal</th>
+                            <th class="px-6 py-3">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100">
+                        <tr>
+                            <td class="px-6 py-4 font-medium text-gray-800">Wani User</td>
+                            <td class="px-6 py-4">BCA - 883012389</td>
+                            <td class="px-6 py-4 font-bold">Rp 250.000</td>
+                            <td class="px-6 py-4"><span class="bg-green-100 text-green-700 px-2.5 py-1 rounded-full font-semibold text-[10px]">Sukses</span></td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4 font-medium text-gray-800">Budi Santoso</td>
+                            <td class="px-6 py-4">Mandiri - 137001234</td>
+                            <td class="px-6 py-4 font-bold">Rp 1.000.000</td>
+                            <td class="px-6 py-4"><span class="bg-green-100 text-green-700 px-2.5 py-1 rounded-full font-semibold text-[10px]">Sukses</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
