@@ -1,1 +1,36 @@
+/* Menghilangkan highlight bawaan browser saat elemen di-tap di HP */
+* {
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
 
+/* Mempercantik atau menyembunyikan scrollbar pada pilihan bank */
+.overflow-y-auto::-webkit-scrollbar {
+    width: 4px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.overflow-y-auto::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+/* Animasi sederhana untuk modal popup */
+@keyframes slideUp {
+    from {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.modal-active {
+    animation: slideUp 0.25s ease-out forwards;
+}
